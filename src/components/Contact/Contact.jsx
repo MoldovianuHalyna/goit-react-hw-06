@@ -1,7 +1,29 @@
 import { FaUser } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import s from "./Contact.module.css";
-const Contact = ({ id, name, number, deleteContact }) => {
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/actions";
+import { Slide, toast } from "react-toastify";
+import { MdDeleteOutline } from "react-icons/md";
+
+const Contact = ({ id, name, number }) => {
+  const dispatch = useDispatch();
+  const onDelete = (id) => {
+    dispatch(deleteContact(id));
+    toast.success("Contact deleted successfully", {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: s.customToastDelete,
+      theme: "light",
+      transition: Slide,
+      icon: <MdDeleteOutline />,
+    });
+  };
   return (
     <div className={s.contactItem}>
       <p className={s.contactItemText}>
@@ -14,7 +36,7 @@ const Contact = ({ id, name, number, deleteContact }) => {
       </p>
       <button
         className={s.buttonDeleteContact}
-        onClick={() => deleteContact(id)}
+        onClick={() => onDelete(id)}
         type="button"
       >
         Delete

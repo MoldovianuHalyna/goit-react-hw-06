@@ -1,8 +1,8 @@
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 import { MdDeleteOutline } from "react-icons/md";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import s from "./main.module.css";
 import Container from "./components/Container/Container";
 import ContactForm from "./components/ContactForm/ContactForm";
@@ -21,10 +21,6 @@ function App() {
   );
   const [filter, setFilter] = useState("");
 
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
   const handleChangeInput = (event) => {
     const { value } = event.target;
     setFilter(value);
@@ -34,35 +30,13 @@ function App() {
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const addContact = (contact) => {
-    const newContacts = [contact, ...contacts];
-    setContacts(newContacts);
-  };
-  const deleteContact = (id) => {
-    const newContacts = contacts.filter((contact) => contact.id !== id);
-    setContacts(newContacts);
-    localStorage.setItem("contacts", JSON.stringify(newContacts));
-    toast.success("Contact deleted successfully", {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      className: s.customToastDelete,
-      theme: "light",
-      transition: Slide,
-      icon: <MdDeleteOutline />,
-    });
-  };
   return (
     <Container>
       <h1 className={s.header}>Phone Book</h1>
-      <ContactForm addContact={addContact} />
+      <ContactForm />
       <SearchBox handleChangeInput={handleChangeInput} />
 
-      <ContactList contacts={filteredContacts} deleteContact={deleteContact} />
+      <ContactList contacts={filteredContacts} />
 
       <ToastContainer />
     </Container>

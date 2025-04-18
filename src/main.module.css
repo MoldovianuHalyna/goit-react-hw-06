@@ -7,11 +7,7 @@ body {
   font-style: normal;
 }
 .header {
-  color: #5b99f0;
+  color: #6e5cc7;
   text-transform: uppercase;
   text-align: center;
-}
-.customToastDelete {
-  background-color: #5b99f0;
-  color: #f0f8ff;
 }

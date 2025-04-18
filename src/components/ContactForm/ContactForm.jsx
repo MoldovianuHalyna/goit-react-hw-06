@@ -3,29 +3,39 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { Slide } from "react-toastify";
-import { TbFaceIdError } from "react-icons/tb";
 import { FaRegThumbsUp } from "react-icons/fa";
 import s from "./ContactForm.module.css";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/actions";
 
 const initialValues = {
   name: "",
-  phone: "",
+  number: "",
 };
 const registerSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Min 3 characters")
     .max(50, "Max 50 characters")
     .required("This field is Required "),
-  phone: Yup.string()
+  number: Yup.string()
     .min(3, "Min 3 characters")
     .max(50, "Max 50 characters")
     .required("This field is required"),
 });
 
-const ContactForm = ({ addContact }) => {
-  const handleSubmit = (values, options) => {
-    addContact({ name: values.name, number: values.phone, id: nanoid() });
-    options.resetForm();
+const ContactForm = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values, actions) => {
+    dispatch(
+      addContact({
+        name: values.name,
+        number: values.number,
+        id: nanoid(),
+      })
+    );
+
+    actions.resetForm();
     toast.success("Contact created successfully", {
       position: "top-center",
       autoClose: 3000,
@@ -36,6 +46,7 @@ const ContactForm = ({ addContact }) => {
       progress: undefined,
       theme: "light",
       transition: Slide,
+      className: s.customToastAdd,
       icon: <FaRegThumbsUp />,
     });
   };
@@ -55,8 +66,8 @@ const ContactForm = ({ addContact }) => {
           </label>
           <label className={s.formLabel}>
             <h3>Phone number</h3>
-            <Field className={s.formInput} type="text" name="phone"></Field>
-            <ErrorMessage className={s.error} name="phone" component="p" />
+            <Field className={s.formInput} type="text" name="number"></Field>
+            <ErrorMessage className={s.error} name="number" component="p" />
           </label>
           <button className={s.buttonAddContact} type="submit">
             Add contact

@@ -4,9 +4,11 @@ import Grid from "../Grid/Grid";
 import s from "./ContactList.module.css";
 import { selectContacts } from "../../redux/selectors";
 import { selectFilter } from "../../redux/selectors";
+
 const ContactList = () => {
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
+
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter.toLowerCase())
   );

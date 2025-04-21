@@ -6,7 +6,7 @@ import { Slide } from "react-toastify";
 import { FaRegThumbsUp } from "react-icons/fa";
 import s from "./ContactForm.module.css";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/actions";
+import { addContact } from "../../redux/contactsSlice";
 
 const initialValues = {
   name: "",
